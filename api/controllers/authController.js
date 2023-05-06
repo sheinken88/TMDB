@@ -1,19 +1,19 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { generateToken } = require("../config/tokens");
 
 const registerUser = (req, res) => {
-  // Capturar los campos del req.body
+  // capturar los campos del req.body
   const { userName, email, password } = req.body;
 
-  // Validar si todos los campos están presentes
-  // Esta verificación la tengo que llevar al front cuando lo arme
+  // validar si todos los campos están presentes
+  // esta verificación la tengo que llevar al front cuando lo arme
   if (!userName || !email || !password) {
     return res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
 
-  // Verificar si el usuario ya existe
+  // verificar si el usuario ya existe
   User.findOne({ where: { email } })
     .then((user) => {
       if (user) {
@@ -22,7 +22,7 @@ const registerUser = (req, res) => {
           .json({ error: "El correo electrónico ya está en uso" });
       }
 
-      // Crear el nuevo usuario
+      // crear el nuevo usuario
       User.create({
         userName,
         email,
@@ -41,25 +41,25 @@ const registerUser = (req, res) => {
 };
 
 const loginUser = (req, res) => {
-  // Capturar los campos del req.body
+  // capturar los campos del req.body
   const { email, password } = req.body;
 
-  // Validar si los campos email y password están presentes
-  // Esta verificación la tengo que llevar al front cuando lo arme
+  // validar si los campos email y password están presentes
+  // esta verificación la tengo que llevar al front cuando lo arme
   if (!email || !password) {
     return res
       .status(400)
       .json({ error: "Se requieren correo electrónico y contraseña" });
   }
 
-  // Buscar el usuario en la base de datos
+  // buscar el usuario en la base de datos
   User.findOne({ where: { email } })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ error: "Usuario no encontrado" });
       }
 
-      // Comparar la contraseña proporcionada con la contraseña almacenada
+      // comparar la contraseña proporcionada con la contraseña almacenada
       bcrypt.compare(password, user.password, (err, isMatch) => {
         if (err) {
           return res
@@ -71,6 +71,7 @@ const loginUser = (req, res) => {
           return res.status(401).json({ error: "Contraseña incorrecta" });
         }
 
+        // generar la token
         const token = generateToken({ id: user.id });
         res.status(200).json({ token });
       });
