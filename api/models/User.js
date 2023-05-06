@@ -3,8 +3,10 @@ const db = require("../db/index");
 const bcrypt = require("bcrypt");
 
 class User extends Sequelize.Model {
-  validatePassword = (password, salt) => {
-    return bcrypt.hash(password, salt).then((hash) => hash === password);
+  validatePassword = (password) => {
+    return bcrypt
+      .hash(password, this.salt)
+      .then((hash) => hash === this.password);
   };
 }
 

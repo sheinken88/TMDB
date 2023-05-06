@@ -42,7 +42,7 @@ const registerUser = (req, res) => {
 
 const loginUser = (req, res) => {
   // capturar los campos del req.body
-  const { email, password } = req.body;
+  const { userName, email, password } = req.body;
 
   // validar si los campos email y password están presentes
   // esta verificación la tengo que llevar al front cuando lo arme
@@ -59,22 +59,27 @@ const loginUser = (req, res) => {
         return res.status(404).json({ error: "Usuario no encontrado" });
       }
 
-      // comparar la contraseña proporcionada con la contraseña almacenada
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) {
+      // Use validatePassword method from User model
+      user
+        .validatePassword(password)
+        .then((isValid) => {
+          if (!isValid) {
+            return res.status(401).json({ error: "Contraseña incorrecta" });
+          }
+
+          // Generate the token
+          const token = generateToken({
+            userName: user.UserName,
+            email: user.email,
+          });
+
+          res.status(200).json({ token });
+        })
+        .catch((err) => {
           return res
             .status(500)
             .json({ error: "Error al comparar las contraseñas" });
-        }
-
-        if (!isMatch) {
-          return res.status(401).json({ error: "Contraseña incorrecta" });
-        }
-
-        // generar la token
-        const token = generateToken({ id: user.id });
-        res.status(200).json({ token });
-      });
+        });
     })
     .catch((error) =>
       res.status(500).json({ error: "Error al buscar el usuario" })
