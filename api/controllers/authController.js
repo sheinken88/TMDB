@@ -67,13 +67,13 @@ const loginUser = (req, res) => {
             return res.status(401).json({ error: "Contraseña incorrecta" });
           }
 
+          const payload = { userName: user.userName, email: user.email };
           // Generate the token
-          const token = generateToken({
-            userName: user.UserName,
-            email: user.email,
-          });
+          const token = generateToken(payload);
+          res.cookie("token", token);
+          res.send(payload);
 
-          res.status(200).json({ token });
+          // res.status(200).json({ token });
         })
         .catch((err) => {
           return res

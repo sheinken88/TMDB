@@ -33,7 +33,7 @@ export default function Login() {
       .post(`${settings.axiosURL}/api/users/login`, user)
       .then((result) => {
         const token = result.data.token;
-        localStorage.setItem("authToken", token);
+        localStorage.setItem("token", token);
         // const decodedToken = jwtDecode(token);
         // console.log("Decoded token: ", decodedToken);
 
@@ -42,7 +42,7 @@ export default function Login() {
           email: result.data.email,
         });
 
-        navigate("/");
+        navigate("/me");
       })
 
       .catch((err) => console.log(err));

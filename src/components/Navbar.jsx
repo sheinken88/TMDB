@@ -1,5 +1,9 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/authContext";
+import * as settings from "../settings";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../settings/useAuth";
+
 import {
   Button,
   Flex,
@@ -11,6 +15,8 @@ import {
   MenuList,
   MenuItem,
   MenuButton,
+  MenuGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -75,7 +81,24 @@ function Navbar() {
         </Flex>
         <Spacer />
         {isAuthenticated ? (
-          <h1>{userName}</h1>
+          <Menu>
+            <MenuButton fontSize="lg" color="white">
+              {userName}
+            </MenuButton>
+            <MenuList>
+              <MenuItem as={Link} to="">
+                Account
+              </MenuItem>
+              <MenuItem as={Link} to="">
+                My list
+              </MenuItem>
+              <MenuDivider />
+
+              <MenuItem as={Link} to="/">
+                Log out
+              </MenuItem>
+            </MenuList>
+          </Menu>
         ) : (
           <ButtonGroup gap="2">
             <Link to="/signup">
