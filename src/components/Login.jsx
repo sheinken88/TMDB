@@ -4,6 +4,7 @@ import axios from "axios";
 import * as settings from "../settings";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../settings/useAuth";
+import Cookies from "js-cookie";
 // import jwtDecode from "jsonwebtoken";
 
 import {
@@ -32,17 +33,16 @@ export default function Login() {
     axios
       .post(`${settings.axiosURL}/api/users/login`, user)
       .then((result) => {
+        console.log("result.data: ", result.data);
         const token = result.data.token;
-        localStorage.setItem("token", token);
-        // const decodedToken = jwtDecode(token);
-        // console.log("Decoded token: ", decodedToken);
+        Cookies.set("authToken", token);
 
         logUser({
           userName: result.data.userName,
           email: result.data.email,
         });
 
-        navigate("/me");
+        navigate("/");
       })
 
       .catch((err) => console.log(err));

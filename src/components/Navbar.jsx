@@ -23,7 +23,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
   const { isAuthenticated, userName, logOut } = useContext(AuthContext);
   console.log("userName: ", userName);
-  console.log("isAuthenticated: ");
+  console.log("isAuthenticated: ", isAuthenticated);
   return (
     <>
       <Flex
