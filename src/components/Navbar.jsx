@@ -15,13 +15,13 @@ import {
   MenuList,
   MenuItem,
   MenuButton,
-  MenuGroup,
   MenuDivider,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const { isAuthenticated, userName, logOut } = useContext(AuthContext);
+  const { isAuthenticated, userName, logUser, logOut } =
+    useContext(AuthContext);
   console.log("userName: ", userName);
   console.log("isAuthenticated: ", isAuthenticated);
   return (
@@ -86,7 +86,7 @@ function Navbar() {
               {userName}
             </MenuButton>
             <MenuList>
-              <MenuItem as={Link} to="">
+              <MenuItem as={Link} to="/">
                 Account
               </MenuItem>
               <MenuItem as={Link} to="">

@@ -38,11 +38,12 @@ export default function Login() {
         Cookies.set("authToken", token);
 
         logUser({
-          userName: result.data.userName,
-          email: result.data.email,
+          userName: result.data.payload.userName,
+          email: result.data.payload.email,
+          // isAuthenticated: true,
         });
 
-        navigate("/");
+        navigate("/me");
       })
 
       .catch((err) => console.log(err));

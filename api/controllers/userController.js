@@ -2,7 +2,7 @@ const User = require("../models/User");
 
 const getUserInfo = (req, res) => {
   // caputar los campos del req.user que se decodean en authMiddleware
-  const { email } = req.user;
+  const { email, userName } = req.user;
 
   User.findOne({ where: { email } })
     .then((user) => {

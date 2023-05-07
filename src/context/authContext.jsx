@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createContext } from "react";
+import axios from "axios";
+import * as settings from "../settings";
+import Cookies from "js-cookie";
 
 const initialState = {
   userName: "",
@@ -7,6 +10,7 @@ const initialState = {
   isAuthenticated: false,
   logUser: () => null,
   logOut: () => null,
+  fetchUser: () => null,
 };
 export const AuthContext = createContext(initialState);
 
@@ -25,13 +29,37 @@ const AuthContextProvider = ({ children }) => {
       isAuthenticated: false,
     });
   };
+
+  const fetchUser = () => {
+    const token = Cookies.get("authToken");
+    if (!token) return;
+
+    axios
+      .get(`${settings.axiosURL}/api/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          logUser(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Error fetching user:", error);
+      });
+  };
+
   const [auth, setAuth] = useState({
     userName: "",
     email: "",
     isAuthenticated: false,
     logUser,
     logOut,
+    fetchUser,
   });
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -41,6 +69,7 @@ const AuthContextProvider = ({ children }) => {
         isAuthenticated: auth.isAuthenticated,
         logUser,
         logOut,
+        fetchUser,
       }}
     >
       {children}

@@ -72,7 +72,7 @@ const loginUser = (req, res) => {
           const token = generateToken(payload);
           // res.cookie("token", token, { httpOnly: true });
           // res.send(payload);
-          res.status(200).json({ token });
+          res.status(200).json({ payload: payload, token: token });
 
           // res.status(200).json({ token });
         })
