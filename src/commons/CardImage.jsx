@@ -1,6 +1,11 @@
 import { Badge, Box, Image, Text } from "@chakra-ui/react";
+import { useContext } from "react";
+import { MovieContext } from "../context/movieContext";
 
-export default function CardImage() {
+export default function CardImage({ movie }) {
+  if (!movie) return null;
+  const { poster_path, vote_average, title, release_date } = movie;
+
   return (
     <Box
       marginTop="2rem"
@@ -24,21 +29,21 @@ export default function CardImage() {
           left="0.5rem"
           boxShadow="0px 0px 8px rgba(0, 0, 0, 0.2)"
         >
-          {"80"}%
+          {vote_average * 10}%
         </Badge>
         <Image
-          src={"https://m.media-amazon.com/images/I/81EBp0vOZZL.jpg"}
-          alt={"title"}
+          src={`https://image.tmdb.org/t/p/w200${poster_path}`}
+          alt={title}
           h="300px"
           w="200px"
         />
       </Box>
       <Box p="6">
         <Text fontSize="m" fontWeight="bold">
-          {"Lord of the rings"}
+          {title}
         </Text>
         <Text mt="2" color="gray.500">
-          {"releaseDate"}
+          {release_date}
         </Text>
       </Box>
     </Box>

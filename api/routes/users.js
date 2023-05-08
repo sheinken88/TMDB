@@ -10,6 +10,8 @@ router.post("/login", authController.loginUser);
 // Todas las rutas siguientes van a necesitar autorización
 router.use(authMiddleware);
 
-router.get("/me", userController.getUserInfo);
+router.get("/me", authMiddleware, (req, res) => {
+  res.send(req.user);
+});
 
 module.exports = router;

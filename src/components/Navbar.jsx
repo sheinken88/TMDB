@@ -3,6 +3,8 @@ import { AuthContext } from "../context/authContext";
 import * as settings from "../settings";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../settings/useAuth";
+import { MovieContext } from "../context/movieContext";
+import useFetchMovies from "../hooks/useFetchMovies";
 
 import {
   Button,
@@ -24,6 +26,18 @@ function Navbar() {
     useContext(AuthContext);
   console.log("userName: ", userName);
   console.log("isAuthenticated: ", isAuthenticated);
+
+  const { fetchMovies, loading } = useFetchMovies();
+  const { updateMovies } = useContext(MovieContext);
+
+  const handlePopularClick = () => {
+    if (!loading) {
+      fetchMovies("popular").then((movies) => {
+        updateMovies(movies);
+      });
+    }
+  };
+
   return (
     <>
       <Flex
@@ -51,7 +65,11 @@ function Navbar() {
               Movies
             </MenuButton>
             <MenuList>
-              <MenuItem as={Link} to="">
+              <MenuItem
+                as={Link}
+                to="/movies/popular"
+                onClick={handlePopularClick}
+              >
                 Popular
               </MenuItem>
               <MenuItem as={Link} to="">
