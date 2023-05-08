@@ -3,7 +3,7 @@ import axios from "axios";
 
 const apiKey = "a836767b9cc13ce5c4ff600a12dca56f";
 
-const useFetchMovies = (category) => {
+const useFetchMovies = () => {
   //defino un estado para el fetch a la api
   const [loading, setLoading] = useState(false);
 

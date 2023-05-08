@@ -1,6 +1,6 @@
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcrypt");
+// const jwt = require("jsonwebtoken");
 const { generateToken } = require("../config/tokens");
 
 const registerUser = (req, res) => {
@@ -70,9 +70,15 @@ const loginUser = (req, res) => {
           const payload = { userName: user.userName, email: user.email };
           // Generate the token
           const token = generateToken(payload);
-          // res.cookie("token", token, { httpOnly: true });
+          console.log("token: ", token);
+          res.cookie("token", token, {
+            maxAge: 900000,
+            httpOnly: true,
+            sameSite: "none", // Allow cross-site requests
+            secure: false, // Set this flag if your server uses HTTPS
+          });
           // res.send(payload);
-          res.status(200).json({ payload: payload, token: token });
+          res.status(200).json({ payload: payload });
 
           // res.status(200).json({ token });
         })

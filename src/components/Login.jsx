@@ -5,7 +5,6 @@ import * as settings from "../settings";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../settings/useAuth";
 import Cookies from "js-cookie";
-// import jwtDecode from "jsonwebtoken";
 
 import {
   Box,
@@ -34,8 +33,8 @@ export default function Login() {
       .post(`${settings.axiosURL}/api/users/login`, user)
       .then((result) => {
         console.log("result.data: ", result.data);
-        const token = result.data.token;
-        Cookies.set("authToken", token);
+        // const token = result.data.token;
+        // Cookies.set("token", token);
 
         logUser({
           userName: result.data.payload.userName,
@@ -43,7 +42,7 @@ export default function Login() {
           // isAuthenticated: true,
         });
 
-        navigate("/me");
+        navigate("/movies/popular");
       })
 
       .catch((err) => console.log(err));

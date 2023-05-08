@@ -57,10 +57,6 @@ const AuthContextProvider = ({ children }) => {
     fetchUser,
   });
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{

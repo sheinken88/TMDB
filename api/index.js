@@ -6,10 +6,10 @@ const db = require("./db/index");
 // const models = require("./models/index");
 const routes = require("./routes/index");
 
-app.use(cors()); // para utilizar dos puertos, uno front y otro back.
-
 app.use(express.json()); // middleware para parsear json
-app.unsubscribe(cookieParser());
+app.use(cookieParser());
+
+app.use(cors()); // para utilizar dos puertos, uno front y otro back.
 
 app.use("/api", routes);
 

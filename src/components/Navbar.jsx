@@ -24,15 +24,16 @@ import { Link } from "react-router-dom";
 function Navbar() {
   const { isAuthenticated, userName, logUser, logOut } =
     useContext(AuthContext);
+  // localStorage.setItem("userName", userName)
   console.log("userName: ", userName);
   console.log("isAuthenticated: ", isAuthenticated);
 
   const { fetchMovies, loading } = useFetchMovies();
   const { updateMovies } = useContext(MovieContext);
 
-  const handlePopularClick = () => {
+  const handleClick = (category) => {
     if (!loading) {
-      fetchMovies("popular").then((movies) => {
+      fetchMovies(category).then((movies) => {
         updateMovies(movies);
       });
     }
@@ -68,14 +69,22 @@ function Navbar() {
               <MenuItem
                 as={Link}
                 to="/movies/popular"
-                onClick={handlePopularClick}
+                onClick={() => handleClick("popular")}
               >
                 Popular
               </MenuItem>
-              <MenuItem as={Link} to="">
+              <MenuItem
+                as={Link}
+                to="/movies/upcoming"
+                onClick={() => handleClick("upcoming")}
+              >
                 Upcoming
               </MenuItem>
-              <MenuItem as={Link} to="">
+              <MenuItem
+                as={Link}
+                to="/movies/topRated"
+                onClick={() => handleClick("vote_average.desc")}
+              >
                 Top Rated
               </MenuItem>
             </MenuList>
