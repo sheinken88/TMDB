@@ -5,8 +5,33 @@ import { Link } from "react-router-dom";
 
 export default function CardImage({ movie }) {
   if (!movie) return null;
-  const { poster_path, vote_average, title, release_date } = movie;
-  // console.log(movie);
+  const {
+    poster_path,
+    vote_average,
+    original_title,
+    original_name,
+    release_date,
+    first_air_date,
+  } = movie;
+  console.log(movie);
+
+  const getTitle = () => {
+    if (original_title) {
+      return original_title;
+    } else if (original_name) {
+      return original_name;
+    }
+  };
+  const getDate = () => {
+    if (release_date) {
+      return release_date;
+    } else if (first_air_date) {
+      return first_air_date;
+    }
+  };
+
+  const title = getTitle();
+  const date = getDate();
 
   return (
     <Box
@@ -48,7 +73,7 @@ export default function CardImage({ movie }) {
           {title}
         </Text>
         <Text mt="2" color="gray.500">
-          {release_date}
+          {date}
         </Text>
       </Box>
     </Box>
