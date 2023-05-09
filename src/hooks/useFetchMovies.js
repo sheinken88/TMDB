@@ -7,12 +7,12 @@ const useFetchMovies = () => {
   //defino un estado para el fetch a la api
   const [loading, setLoading] = useState(false);
 
-  const fetchMovies = (category) => {
+  const fetchMovies = (type, category) => {
     //seteo el estado a true
     setLoading(true);
     return axios
       .get(
-        `https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/${type}/${category}?api_key=${apiKey}&language=en-US&page=1`
       )
       .then((response) => {
         // una vez trae las pelis seteo el estado a false nuevamente

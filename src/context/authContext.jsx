@@ -23,6 +23,7 @@ const AuthContextProvider = ({ children }) => {
     });
   };
   const logOut = () => {
+    Cookies.remove("token");
     setAuth({
       userName: "",
       email: "",
@@ -31,7 +32,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const fetchUser = () => {
-    const token = Cookies.get("authToken");
+    const token = Cookies.get("token");
     if (!token) return;
 
     axios

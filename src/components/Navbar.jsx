@@ -24,7 +24,7 @@ import {
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const { isAuthenticated, userName } = useContext(AuthContext);
+  const { isAuthenticated, userName, logOut } = useContext(AuthContext);
 
   const { fetchMovies, fetchSearch, loading } = useFetchMovies();
   const { updateMovies } = useContext(MovieContext);
@@ -33,12 +33,13 @@ function Navbar() {
 
   const searchInput = useInput();
 
-  const handleClick = (category) => {
+  const handleClick = (type, category) => {
     if (!loading) {
-      fetchMovies(category).then((movies) => {
+      fetchMovies(type, category).then((movies) => {
         updateMovies(movies);
       });
     }
+    navigate(`/${type}/${category}`);
   };
   const handleOnSubmit = (input) => {
     if (!loading) {
@@ -57,6 +58,9 @@ function Navbar() {
         gap="2"
         p="4"
         backgroundColor="#2B2D42"
+        // as="header"
+        // position="fixed"
+        // width="100%"
       >
         <Box p="2">
           <Link to="/">
@@ -79,14 +83,14 @@ function Navbar() {
               <MenuItem
                 as={Link}
                 to="/movies/popular"
-                onClick={() => handleClick("popular")}
+                onClick={() => handleClick("movie", "popular")}
               >
                 Popular
               </MenuItem>
               <MenuItem
                 as={Link}
                 to="/movies/upcoming"
-                onClick={() => handleClick("upcoming")}
+                onClick={() => handleClick("movie", "upcoming")}
               >
                 Upcoming
               </MenuItem>
@@ -97,11 +101,19 @@ function Navbar() {
               Tv shows
             </MenuButton>
             <MenuList>
-              <MenuItem as={Link} to="">
+              <MenuItem
+                as={Link}
+                to="/tv/popular"
+                onClick={() => handleClick("tv", "popular")}
+              >
                 Popular
               </MenuItem>
-              <MenuItem as={Link} to="">
-                Upcoming
+              <MenuItem
+                as={Link}
+                to="/tv/upcoming"
+                onClick={() => handleClick("tv", "top_rated")}
+              >
+                Top Rated
               </MenuItem>
             </MenuList>
           </Menu>
@@ -158,7 +170,7 @@ function Navbar() {
               </MenuItem>
               <MenuDivider />
 
-              <MenuItem as={Link} to="/">
+              <MenuItem as={Link} to="/" onClick={logOut}>
                 Log out
               </MenuItem>
             </MenuList>

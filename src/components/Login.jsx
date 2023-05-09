@@ -14,7 +14,6 @@ import {
   Stack,
   Button,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
 
 export default function Login() {

@@ -34,7 +34,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/movies/:category" element={<MovieGrid />} />
+          <Route path="/:type/:category" element={<MovieGrid />} />
           <Route path="/movies/info/:movieId" element={<MovieInfo />} />
           <Route path="/" element={<MovieGrid />} />
         </Routes>
