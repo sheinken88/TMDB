@@ -5,12 +5,12 @@ const authMiddleware = (req, res, next) => {
   console.log("TOKEN: ", req.cookies);
   if (!token) return res.sendStatus(401);
 
-  const { user } = validateToken(token);
-  console.log("USER: ", user);
-  if (!user) return res.sendStatus(401);
+  const { payload } = validateToken(token);
+  console.log("PAYLOAD: ", payload);
+  if (!payload) return res.sendStatus(401);
 
   // guardar el usuario en el objeto request
-  req.user = user;
+  req.userName = payload;
   next();
 };
 

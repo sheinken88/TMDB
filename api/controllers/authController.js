@@ -70,7 +70,7 @@ const loginUser = (req, res) => {
           const payload = { userName: user.userName, email: user.email };
           // Generate the token
           const token = generateToken(payload);
-          console.log("token: ", token);
+
           res.cookie("token", token, {
             maxAge: 900000,
             httpOnly: true,

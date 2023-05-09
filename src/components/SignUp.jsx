@@ -72,7 +72,7 @@ export default function SignUp() {
               Sign Up
             </Button>
             <Button
-              type="submit"
+              type="button"
               colorScheme="orange"
               size="lg"
               fontSize="md"

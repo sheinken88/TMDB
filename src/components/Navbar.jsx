@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../settings/useAuth";
 import { MovieContext } from "../context/movieContext";
 import useFetchMovies from "../hooks/useFetchMovies";
+import useInput from "../hooks/useInput";
 
 import {
   Button,
@@ -18,23 +19,32 @@ import {
   MenuItem,
   MenuButton,
   MenuDivider,
+  Input,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const { isAuthenticated, userName, logUser, logOut } =
-    useContext(AuthContext);
-  // localStorage.setItem("userName", userName)
-  console.log("userName: ", userName);
-  console.log("isAuthenticated: ", isAuthenticated);
+  const { isAuthenticated, userName } = useContext(AuthContext);
 
-  const { fetchMovies, loading } = useFetchMovies();
+  const { fetchMovies, fetchSearch, loading } = useFetchMovies();
   const { updateMovies } = useContext(MovieContext);
+
+  const navigate = useNavigate();
+
+  const searchInput = useInput();
 
   const handleClick = (category) => {
     if (!loading) {
       fetchMovies(category).then((movies) => {
         updateMovies(movies);
+      });
+    }
+  };
+  const handleOnSubmit = (input) => {
+    if (!loading) {
+      fetchSearch(input).then((movies) => {
+        updateMovies(movies);
+        navigate("/");
       });
     }
   };
@@ -80,13 +90,6 @@ function Navbar() {
               >
                 Upcoming
               </MenuItem>
-              <MenuItem
-                as={Link}
-                to="/movies/topRated"
-                onClick={() => handleClick("vote_average.desc")}
-              >
-                Top Rated
-              </MenuItem>
             </MenuList>
           </Menu>
           <Menu>
@@ -100,16 +103,50 @@ function Navbar() {
               <MenuItem as={Link} to="">
                 Upcoming
               </MenuItem>
-              <MenuItem as={Link} to="">
-                Top Rated
-              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
         <Spacer />
+        <Box mr={10}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleOnSubmit(searchInput.value);
+              // searchInput.setValue("");
+            }}
+          >
+            <Flex>
+              <Input
+                placeholder="Search"
+                variant="filled"
+                size="md"
+                borderRadius="full"
+                bg="white"
+                boxShadow="md"
+                _hover={{ boxShadow: "lg" }}
+                _focus={{ boxShadow: "lg", color: "white" }}
+                value={searchInput.value}
+                onChange={searchInput.onChange}
+              />
+              <Button
+                type="submit"
+                size="md"
+                ml={2}
+                px={8}
+                borderRadius="full"
+                bg="blue.500"
+                color="white"
+                _hover={{ bg: "blue.600" }}
+                _active={{ bg: "blue.700" }}
+              >
+                Search
+              </Button>
+            </Flex>
+          </form>
+        </Box>
         {isAuthenticated ? (
           <Menu>
-            <MenuButton fontSize="lg" color="white">
+            <MenuButton fontSize="2xl" color="white">
               {userName}
             </MenuButton>
             <MenuList>

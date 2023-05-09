@@ -7,9 +7,15 @@ const db = require("./db/index");
 const routes = require("./routes/index");
 
 app.use(express.json()); // middleware para parsear json
-app.use(cookieParser());
 
-app.use(cors()); // para utilizar dos puertos, uno front y otro back.
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+); // para utilizar dos puertos, uno front y otro back.
+
+app.use(cookieParser());
 
 app.use("/api", routes);
 

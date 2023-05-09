@@ -4,7 +4,7 @@ import axios from "axios";
 import * as settings from "../settings";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../settings/useAuth";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 import {
   Box,
@@ -14,6 +14,7 @@ import {
   Stack,
   Button,
   useColorModeValue,
+  Link,
 } from "@chakra-ui/react";
 
 export default function Login() {
@@ -30,7 +31,9 @@ export default function Login() {
     };
 
     axios
-      .post(`${settings.axiosURL}/api/users/login`, user)
+      .post(`${settings.axiosURL}/api/users/login`, user, {
+        withCredentials: true,
+      })
       .then((result) => {
         console.log("result.data: ", result.data);
         // const token = result.data.token;
@@ -71,6 +74,19 @@ export default function Login() {
           </FormControl>
           <Button type="submit" colorScheme="orange" size="lg" fontSize="md">
             Login
+          </Button>
+          <Button
+            type="button"
+            colorScheme="orange"
+            size="xs"
+            fontSize="md"
+            variant="ghost"
+            // as={Link}
+            // to="/"
+            //porque aca no funciona la opción as={Link} to="/" y en el componente SignUp si...?
+            onClick={() => navigate("/")}
+          >
+            Cancel
           </Button>
         </Stack>
       </form>

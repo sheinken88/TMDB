@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import MovieGrid from "./components/MovieGrid";
+import MovieInfo from "./components/MovieInfo";
 import { Route, Routes } from "react-router-dom";
 
 import MovieContextProvider from "./context/movieContext";
@@ -22,7 +23,7 @@ function App() {
         }
       })
       .catch((error) => {
-        console.log("Error fetching user:", error);
+        console.log();
       });
   }, []);
 
@@ -34,6 +35,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/movies/:category" element={<MovieGrid />} />
+          <Route path="/movies/info/:movieId" element={<MovieInfo />} />
+          <Route path="/" element={<MovieGrid />} />
         </Routes>
       </>
     </MovieContextProvider>
