@@ -1,6 +1,4 @@
 import { Badge, Box, Image, Text } from "@chakra-ui/react";
-// import { useContext } from "react";
-// import { MovieContext } from "../context/movieContext";
 import { Link } from "react-router-dom";
 
 export default function CardImage({ movie }) {
@@ -36,7 +34,7 @@ export default function CardImage({ movie }) {
   return (
     <Box
       as={Link}
-      to={`/movies/info/${movie.id}`} // le seteo la ruta dinamica en base al id del elemento movie.
+      to={`/${movie.media_type}/info/${movie.id}`} // le seteo la ruta dinamica en base al media_type y al id del elemento movie.
       marginTop="2rem"
       marginLeft="2rem"
       maxW="200px"
@@ -69,7 +67,7 @@ export default function CardImage({ movie }) {
         />
       </Box>
       <Box p="6">
-        <Text fontSize="m" fontWeight="bold">
+        <Text fontSize="m" fontWeight="bold" mt={5}>
           {title}
         </Text>
         <Text mt="2" color="gray.500">

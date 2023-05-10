@@ -17,6 +17,7 @@ const useFetchMovies = () => {
       .then((response) => {
         // una vez trae las pelis seteo el estado a false nuevamente
         setLoading(false);
+        console.log("response.data", response.data);
         return response.data.results;
       })
       .catch((error) => {
@@ -32,7 +33,7 @@ const useFetchMovies = () => {
     return axios
       .get(
         `
-    https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${input}&page=1`
+    https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${input}&page=1`
       )
       .then((response) => {
         setLoading(false);

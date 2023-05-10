@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const SECRET = "fideos"; // como guardo el SECRET en la DB?
+const SECRET = "fideos";
 
 // el payload viene de authController.userLogin
 function generateToken(payload) {

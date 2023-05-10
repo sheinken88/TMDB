@@ -25,12 +25,9 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const { isAuthenticated, userName, logOut } = useContext(AuthContext);
-
   const { fetchMovies, fetchSearch, loading } = useFetchMovies();
   const { updateMovies } = useContext(MovieContext);
-
   const navigate = useNavigate();
-
   const searchInput = useInput();
 
   const handleClick = (type, category) => {
