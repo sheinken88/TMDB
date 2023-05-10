@@ -71,12 +71,7 @@ const loginUser = (req, res) => {
           // Generate the token
           const token = generateToken(payload);
 
-          res.cookie("token", token, {
-            maxAge: 900000,
-            httpOnly: true,
-            sameSite: "none", // Allow cross-site requests
-            secure: false, // Set this flag if your server uses HTTPS
-          });
+          res.cookie("token", token);
           // res.send(payload);
           res.status(200).json({ payload: payload });
 

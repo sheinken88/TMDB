@@ -2,6 +2,8 @@ import { Badge, Box, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export default function CardImage({ movie }) {
+  console.log("MOVIE:", movie);
+
   if (!movie) return null;
   const {
     poster_path,
@@ -11,7 +13,6 @@ export default function CardImage({ movie }) {
     release_date,
     first_air_date,
   } = movie;
-  console.log(movie);
 
   const getTitle = () => {
     if (original_title) {
@@ -34,7 +35,7 @@ export default function CardImage({ movie }) {
   return (
     <Box
       as={Link}
-      to={`/${movie.media_type}/info/${movie.id}`} // le seteo la ruta dinamica en base al media_type y al id del elemento movie.
+      to={original_title ? `/movie/info/${movie.id}` : `/tv/info/${movie.id}`}
       marginTop="2rem"
       marginLeft="2rem"
       maxW="200px"

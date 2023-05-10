@@ -33,9 +33,8 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/:type/:category" element={<MovieGrid />} />
-          <Route path="/:mediaType/info/:movieId" element={<MovieInfo />} />
-          <Route path="/:mediaType/info/:tvShowId" element={<MovieInfo />} />
+          <Route path="/:mediaType/:category" element={<MovieGrid />} />
+          <Route path="/:mediaType/info/:mediaId" element={<MovieInfo />} />
           <Route path="/" element={<MovieGrid />} />
         </Routes>
       </>
